@@ -1,0 +1,112 @@
+<div class="card" *ngIf="student">
+    <div class="card-body">
+        <form [formGroup]="studentForm">
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input id="name" class="form-control" type="text" formControlName="fname">
+                <ng-container *ngIf="studentForm.controls['fname'].errors">
+                    <div class="alert alert-danger" *ngIf="studentForm.controls['fname'].errors['required']">This field
+                        is required</div>
+                    <div class="alert alert-danger" *ngIf="studentForm.controls['fname'].errors['minlength']">This field
+                        must be at least 2 chars</div>
+                </ng-container>
+            </div>
+
+            <div class="form-group">
+                <label for="lName">Last Name:</label>
+                <input id="lName" class="form-control" type="text" formControlName="lname">
+                <ng-container *ngIf="studentForm.controls['lname'].errors">
+                    <div class="alert alert-danger" *ngIf="studentForm.controls['lname'].errors['required']">This field
+                        is required</div>
+                    <div class="alert alert-danger" *ngIf="studentForm.controls['lname'].errors['minlength']">This field
+                        must be at least 2 chars</div>
+                </ng-container>
+            </div>
+            <div class="form-group">
+                <label for="address">Address:</label>
+                <input id="address" class="form-control" type="text" formControlName="address">
+                <ng-container *ngIf="studentForm.controls['address'].errors">
+                    <div class="alert alert-danger" *ngIf="studentForm.controls['address'].errors['required']">This field is required</div>
+                </ng-container>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone:</label>
+                <input id="phone" class="form-control" type="text" formControlName="phone">
+                <ng-container *ngIf="studentForm.controls['phone'].errors">
+                    <div class="alert alert-danger" *ngIf="studentForm.controls['phone'].errors['required']">This field
+                        is required</div>
+                </ng-container>
+            </div>
+
+            <div class="form-group">
+                <label for="isActive">Active? </label>
+                <br>
+                <input type="radio" value="true" name="isActive" formControlName="isActive" />True
+                <input type="radio" value="false" name="isActive" formControlName="isActive" />False
+            </div>
+
+            <div class="form-group" *ngIf="studentForm.controls['isActive'].value=='false'">
+                <label for="lastDay">Last Day:</label>
+                <input id="lastDay" class="form-control" type="date" formControlName="lastDay">
+            </div>
+
+            <div class="form-group">
+                <label for="avgMarks">Average: </label>
+                <input id="avgMarks" class="form-control" type="number" formControlName="avgMarks">
+                <ng-container *ngIf="studentForm.controls['avgMarks'].errors">
+                    <div class="alert alert-danger" *ngIf="studentForm.controls['avgMarks'].errors['required']">This
+                        field is required</div>
+                    <div class="alert alert-danger" *ngIf="studentForm.controls['avgMarks'].errors['min']">Mark must be
+                        more than 0</div>
+                    <div class="alert alert-danger" *ngIf="studentForm.controls['avgMarks'].errors['max']">Mark can't be
+                        more than 100</div>
+                </ng-container>
+            </div>
+            <div class="form-group">
+                <label for="courseId">Course:</label>
+                <select id="courseId" class="form-control" formControlName="courseId">
+                    <option *ngFor="let course of coursesList" [value]="course.id">{{course.name}}</option>
+                    <ng-container *ngIf="studentForm.controls['courseId'].errors">
+                        <div class="alert alert-danger" *ngIf="studentForm.controls['courseId'].errors['required']">This
+                            field is required</div>
+                    </ng-container>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="year">Studies Year: </label>
+                <input type="radio" value="studyYear.First" name="year" formControlName="year" />First
+                <input type="radio" value="studyYear.Second" name="year" formControlName="year" />Second
+                <input type="radio" value="studyYear.Third" name="year" formControlName="year" />Third
+            </div>
+            <div [ngSwitch]="studentForm.value['year']">
+                <div *ngSwitchCase="'studyYear.First'" style="color: green;">
+                    You have to learn 100 days
+                </div>
+                <div *ngSwitchCase="'studyYear.Second'" style="color: blue;">
+                    You have to learn 150 days
+                </div>
+                <div *ngSwitchCase="'studyYear.Third'" style="color: brown;">
+                    You have to learn 125 days
+                </div>
+                <div *ngSwitchDefault style="color: goldenrod;">
+                    You don't have studies
+                </div>
+            </div>
+
+            <br>
+            <div class="aaa"> Total absence days {{this.total()}} </div>
+            <div class="asd">
+                <label for="missingFromDate">Date From:</label>
+                <input [(ngModel)]="missingFromDate" [ngModelOptions]="{standalone: true}" id="missingFromDate"
+                    type="date">
+            </div>
+            <div class="asd">
+                <label for="missingDays">Total Days: </label>
+                <input [(ngModel)]="missingDays" [ngModelOptions]="{standalone: true}" id="missingDays" type="number">
+            </div>
+            <!-- {{studentForm.value | json}} -->
+            <br>
+            <button class="btn btn-primary" (click)="saveNewStudent()" [disabled]="!studentForm.valid">Save</button>
+        </form>
+    </div>
+</div>

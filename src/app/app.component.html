@@ -1,0 +1,7 @@
+<a>{{timeOfDay()}}</a>
+<h1>Hello {{title}}</h1>
+<observable></observable>
+<div class="row">
+    <student-list class="col-8" (focusStudent)="showQuizes($event)"></student-list>
+    <quiz-history *ngIf="student" class="col-4" [id]="student.id" [quizes]="student.quizes"></quiz-history>
+</div>

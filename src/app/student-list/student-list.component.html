@@ -1,0 +1,21 @@
+<ul class="list-group">
+    <li *ngFor="let student of students" class="list-group-item"
+        [ngClass]="{'list-group-item-danger' :student.isActive == 'false', 'active':student.avgMarks > 90}">
+        <button style="width:100%; padding: 0;" class="row"  (click)="onFocusStudent(student)">
+                <div style="padding: 0px;" class="col-8">
+                    {{student.id}}: {{student.fname}} {{student.lname}}
+                    {{student.address}} {{student.phone}} total: {{this.total(student)}}
+                    Active? {{student.isActive}} Average: {{student.avgMarks}}</div>
+                <div style="padding: 0px;" class="col-4">
+                    <button style="margin: 5px;" (click)="showStudent(student)">Show Details</button>
+                    <button (click)="deleteStudent(student)">Delete Student</button>
+                </div>
+        </button>
+    </li>
+</ul>
+<br>
+<button class="btn btn-primary" (click)="addNewStudent()">Add New Student</button>
+<br>
+<br>
+<!-- <student-details [student]="selectedStudent" (onSavingStudent)="addToList($event)"></student-details> -->
+<student-details-form [student]="selectedStudent" (onSavingStudent)="saveToList($event)"></student-details-form>

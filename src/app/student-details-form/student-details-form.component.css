@@ -1,0 +1,27 @@
+.ng-invalid:not(form):not(.ng-untouched) {
+    border-left: 5px solid red;
+}
+
+.ng-valid:not(form) {
+    border-left: 5px solid green;
+}
+
+.form-group,
+.asd {
+    width: 47%;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+.aaa {
+    background-color: cadetblue;
+    padding: 7px;
+}
+
+#missingDays,
+#missingFromDate {
+    border-radius: 6px;
+    height: 37px;
+    width: 100%;
+    border-left-width: 5px;
+}
