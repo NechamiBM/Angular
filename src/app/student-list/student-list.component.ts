@@ -1,18 +1,27 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Student } from '../Models/student.model';
 import { StusdentService } from 'src/app/student.service';
+import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 
 @Component({
   selector: 'student-list',
   templateUrl: './student-list.component.html'
 })
-export class StudentListComponent implements OnInit {
-  students: Student[] = [];
 
+export class StudentListComponent implements OnInit {
+
+  students: Student[] = [];
+  count: number = 0;
   selectedStudent: Student | undefined;
+  searchInput: Subject<string> = new Subject<string>();
+  studentName: string = '';
 
   @Output()
   focusStudent: EventEmitter<Student> = new EventEmitter();
+
+  showStudentByActive(active: boolean) {
+    this._studentService.getStudentsFromServerByActive(active).subscribe(data => this.students = data)
+  }
 
   onFocusStudent(s: Student) {
     this.selectedStudent = s;
@@ -23,42 +32,60 @@ export class StudentListComponent implements OnInit {
     this.selectedStudent = new Student();
   }
 
-
   saveToList(studentToSave: Student) {
-    if (studentToSave.id == 0) {
-      studentToSave.id = this.students.length + 1;
-      this.students.push(studentToSave);
-    }
+    console.log("studentToSave", studentToSave);
+    if (studentToSave.id != 0)
+      this._studentService.updateStudent(studentToSave).subscribe((data) => {
+        console.log("update", data);
+        this.students[this.students?.findIndex(s => studentToSave.id == s.id)] = studentToSave;
+      }, err => console.log("err", err));
     else {
-      let taskToUpdate = this.students.filter(x => x.id == studentToSave.id)[0];
-      let index = this.students.indexOf(taskToUpdate);
-      this.students[index] = studentToSave;
+      studentToSave.id = ++this.count;
+      this._studentService.saveNewStudent(studentToSave).subscribe(() => {
+        alert("add success!");
+        this.students.push(studentToSave);
+      }, err => console.log("err", err));
     }
-    alert("added succesfully  " + JSON.stringify(this.selectedStudent));
     this.selectedStudent = undefined;
   }
 
-  deleteStudent(s: Student) {
-    this.students.splice(this.students.indexOf(s), 1);
+  deleteStudent(studentToDelete: number) {
+    this._studentService.deleteStudent(studentToDelete).subscribe(() => {
+      this.students = this.students.filter(s => s.id != studentToDelete);
+    }, err => console.log("err", err))
   }
 
   showStudent(s: Student) {
     this.selectedStudent = s;
   }
 
-  total(student:Student): number {
+  total(student: Student): number {
     if (student.id)
       return this._studentService.getSumForId(student.id);
     return 0;
   }
+
   constructor(private _studentService: StusdentService) { }
 
-  /*async*/ ngOnInit(): void {
-    // var s = await this._studentService.getStudentsSlowly();
-    // this.students = s;
-    this._studentService.getStudentsSlowly().then(studentList => {
-      this.students = studentList;
+  ngOnInit(): void {
+    //this.students = this._studentService.getStudents();
+    this._studentService.getStudentsFromServer().subscribe(data => {
+      this.students = data;
+      this.count = Math.max(...this.students.map(student => student.id)); this.students.length;
     });
+    this.filterStudents();
+  }
+
+  filterStudents(): void {
+    this.searchInput.pipe(
+      debounceTime(1000),
+      distinctUntilChanged(),
+      switchMap(() => this._studentService.getStudentsFromServerByName(this.studentName)),
+    ).subscribe(d => this.students = d);
+  }
+
+  getStudentByName() {
+    this.searchInput.next(this.studentName);
   }
 
 }

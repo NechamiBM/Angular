@@ -66,7 +66,7 @@ export class StudentDetailsFormComponent implements OnInit {
   constructor(private _studentService: StusdentService) { }
 
   ngOnInit(): void {
-    this.totalMissingDays = this._studentService.getAverageForId(1)
+    
   }
 
 }

@@ -41,7 +41,7 @@ export class ObservableComponent implements OnInit {
   mail() {
     this.mails.subscribe((student) => {
       // ...שליחת המייל איכשהוא
-      if (student.isActive == "true")
+      if (student.isActive == true)
         this.stu += "mail sended successfully to " + student.phone + "<br>";
     })
   }
@@ -49,7 +49,7 @@ export class ObservableComponent implements OnInit {
   stu2: string = "";
   mail2() {
     const emailObservable = from(this.students).pipe(
-      filter(student => student.isActive == "true"), // סינון לסטודנטים פעילים בלבד
+      filter(student => student.isActive == true), // סינון לסטודנטים פעילים בלבד
       map(student => "mail sended successfully " + student.phone + "<br>") // שליחת המייל והחזרת הודעת הצלחה
     );
     emailObservable.subscribe((email) => {

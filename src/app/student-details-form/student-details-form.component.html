@@ -26,7 +26,8 @@
                 <label for="address">Address:</label>
                 <input id="address" class="form-control" type="text" formControlName="address">
                 <ng-container *ngIf="studentForm.controls['address'].errors">
-                    <div class="alert alert-danger" *ngIf="studentForm.controls['address'].errors['required']">This field is required</div>
+                    <div class="alert alert-danger" *ngIf="studentForm.controls['address'].errors['required']">This
+                        field is required</div>
                 </ng-container>
             </div>
             <div class="form-group">
@@ -41,14 +42,14 @@
             <div class="form-group">
                 <label for="isActive">Active? </label>
                 <br>
-                <input type="radio" value="true" name="isActive" formControlName="isActive" />True
-                <input type="radio" value="false" name="isActive" formControlName="isActive" />False
+                <input type="radio" value=true name="isActive" formControlName="isActive" />True
+                <input type="radio" value=false name="isActive" formControlName="isActive" />False
             </div>
 
-            <div class="form-group" *ngIf="studentForm.controls['isActive'].value=='false'">
+            <!-- <div class="form-group" *ngIf="studentForm.controls['isActive'].value==false">
                 <label for="lastDay">Last Day:</label>
                 <input id="lastDay" class="form-control" type="date" formControlName="lastDay">
-            </div>
+            </div> -->
 
             <div class="form-group">
                 <label for="avgMarks">Average: </label>
@@ -72,12 +73,12 @@
                     </ng-container>
                 </select>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="year">Studies Year: </label>
                 <input type="radio" value="studyYear.First" name="year" formControlName="year" />First
                 <input type="radio" value="studyYear.Second" name="year" formControlName="year" />Second
                 <input type="radio" value="studyYear.Third" name="year" formControlName="year" />Third
-            </div>
+            </div> -->
             <div [ngSwitch]="studentForm.value['year']">
                 <div *ngSwitchCase="'studyYear.First'" style="color: green;">
                     You have to learn 100 days
@@ -94,19 +95,20 @@
             </div>
 
             <br>
-            <div class="aaa"> Total absence days {{this.total()}} </div>
+            <!-- <div class="aaa"> Total absence days {{this.total()}} </div>
             <div class="asd">
                 <label for="missingFromDate">Date From:</label>
                 <input [(ngModel)]="missingFromDate" [ngModelOptions]="{standalone: true}" id="missingFromDate"
                     type="date">
-            </div>
+            </div> 
             <div class="asd">
                 <label for="missingDays">Total Days: </label>
                 <input [(ngModel)]="missingDays" [ngModelOptions]="{standalone: true}" id="missingDays" type="number">
-            </div>
+            </div> -->
             <!-- {{studentForm.value | json}} -->
             <br>
-            <button class="btn btn-primary" (click)="saveNewStudent()" [disabled]="!studentForm.valid">Save</button>
+            <button class="btn btn-primary" (click)="saveNewStudent()">Save</button>
+            <!-- <button class="btn btn-primary" (click)="saveNewStudent()" [disabled]="!studentForm.valid">Save</button> -->
         </form>
     </div>
 </div>

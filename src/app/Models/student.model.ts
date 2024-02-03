@@ -2,13 +2,12 @@ import { AbsenceDays } from "./absence.model";
 import { Quiz } from "./quiz.model";
 
 export class Student {
-    static counter: number = 0;
-    public id: number | undefined;
+    public id: number;
     public fname: string;
     public lname: string;
     public address: string;
     public phone: string;
-    public isActive: string;
+    public isActive: boolean;
     public avgMarks: number;
     public lastDay: Date;
     public courseId?: number;
@@ -16,13 +15,13 @@ export class Student {
     public quizes: Quiz[];
     public abDays: AbsenceDays[] = [];
 
-    constructor(fname?: string, lname?: string, address?: string, phone?: string, isActive?: string, avg?: number) {
+    constructor(fname?: string, lname?: string, address?: string, phone?: string, isActive?: boolean, avg?: number) {
         this.id = 0;
         this.fname = fname || "new";
         this.lname = lname || "student";
         this.address = address || "Israel";
         this.phone = phone || "03-5555555";
-        this.isActive = isActive || "false";
+        this.isActive = isActive || false;
         this.avgMarks = avg || 100;
         this.lastDay = new Date();
         this.quizes = [{ "id": 100, "date": new Date(), "description": "test 1", "mark": 80 }]

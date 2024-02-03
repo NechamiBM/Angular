@@ -5,6 +5,7 @@ import { Student } from '../Models/student.model';
   selector: 'student-details',
   templateUrl: './student-details.component.html'
 })
+
 export class StudentDetailsComponent implements OnInit {
 
   @Output() onSavingStudent: EventEmitter<Student> = new EventEmitter;
