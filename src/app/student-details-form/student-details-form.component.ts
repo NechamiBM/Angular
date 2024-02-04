@@ -49,6 +49,23 @@ export class StudentDetailsFormComponent implements OnInit {
 
   saveNewStudent() {
     this.student = this.studentForm.value;
+    let enumValue: number = 0;
+    switch (this.studentForm.controls['year'].value) {
+      case 'studyYear.First':
+        enumValue = Year.First;
+        break;
+      case 'studyYear.Second':
+        enumValue = Year.Second;
+        break;
+      case 'studyYear.Third':
+        enumValue = Year.Third;
+        break;
+    }
+
+    console.log(enumValue, "sssssssssss");
+
+    if (this.student)
+      this.student.year = enumValue;// +Year[this.studentForm.controls['year'].value]; // המרת ה-Enum לערך מספרי
     if (this.missingDays && this.missingDays > 0 && this.missingFromDate)
       this.student?.abDays.push({
         fromDate: this.missingFromDate,
@@ -66,7 +83,7 @@ export class StudentDetailsFormComponent implements OnInit {
   constructor(private _studentService: StusdentService) { }
 
   ngOnInit(): void {
-    
+
   }
 
 }
