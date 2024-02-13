@@ -11,7 +11,7 @@ export class Student {
     public avgMarks: number;
     public lastDay: Date;
     public courseId?: number;
-    public year: Year|number;
+    public year?: Year;
     public quizes: Quiz[];
     public abDays: AbsenceDays[] = [];
 
@@ -24,7 +24,6 @@ export class Student {
         this.isActive = isActive || false;
         this.avgMarks = avg || 100;
         this.lastDay = new Date();
-        this.year = Year.First; 
         this.quizes = [{ "id": 100, "date": new Date(), "description": "test 1", "mark": 80 }]
     }
 }

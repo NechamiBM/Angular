@@ -73,12 +73,12 @@
                     </ng-container>
                 </select>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label for="year">Studies Year: </label>
                 <input type="radio" value="studyYear.First" name="year" formControlName="year" />First
                 <input type="radio" value="studyYear.Second" name="year" formControlName="year" />Second
                 <input type="radio" value="studyYear.Third" name="year" formControlName="year" />Third
-            </div>
+            </div> -->
             <div [ngSwitch]="studentForm.value['year']">
                 <div *ngSwitchCase="'studyYear.First'" style="color: green;">
                     You have to learn 100 days

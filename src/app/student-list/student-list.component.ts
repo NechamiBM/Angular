@@ -34,7 +34,6 @@ export class StudentListComponent implements OnInit {
 
   saveToList(studentToSave: Student) {
     console.log("studentToSave", studentToSave);
-    // let dd=new Student(){ id: studentToSave.id, fname: studentToSave.fname, lname: studentToSave.lname, address: studentToSave.address, phone: studentToSave.phone, isActive: studentToSave.isActive, avgMarks: studentToSave.avgMarks, lastDay: studentToSave.lastDay, courseId: studentToSave.courseId, year: studentToSave.year }
     if (studentToSave.id != 0)
       this._studentService.updateStudent(studentToSave).subscribe((data) => {
         console.log("update", data);
